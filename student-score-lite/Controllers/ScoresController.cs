@@ -17,7 +17,26 @@ namespace student_score_lite.Controllers
         // GET: Scores
         public ActionResult Index()
         {
-            return View(db.Score.ToList());
+            List<Test> testList = db.Test.ToList();
+            List<Student> studentList = db.Student.ToList();
+            List<Score> scoreList = db.Score.ToList();
+
+            List<ScoreListItem> itemList = new List<ScoreListItem>();
+            ScoreListItem item;
+
+            foreach(Score score in scoreList)
+            {
+                item = new ScoreListItem();
+                item.id = score.id;
+                item.grade = score.grade;
+                item.studentName = studentList.Where(s => s.id.Equals(score.idStudent)).First().name;
+                item.testName = testList.Where(t => t.id.Equals(score.idTest)).First().name;
+
+                itemList.Add(item);
+            }
+
+            ViewBag.scoreList = itemList;
+            return View();
         }
 
         // GET: Scores/Details/5
@@ -38,6 +57,8 @@ namespace student_score_lite.Controllers
         // GET: Scores/Create
         public ActionResult Create()
         {
+            ViewBag.testList = db.Test.ToList();
+            ViewBag.studentList = db.Student.ToList();
             return View();
         }
 

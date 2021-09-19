@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<student_score_lite.Models.Score>
+@using student_score_lite.Models
 
 @{
     ViewBag.Title = "Index";
@@ -12,27 +13,27 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.grade)
+            Calificacion
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.idTest)
+            Examen
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.idStudent)
+            Estudiante
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in (List<ScoreListItem>)ViewBag.scoreList) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.grade)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.idTest)
+            @Html.DisplayFor(modelItem => item.testName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.idStudent)
+            @Html.DisplayFor(modelItem => item.studentName)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
